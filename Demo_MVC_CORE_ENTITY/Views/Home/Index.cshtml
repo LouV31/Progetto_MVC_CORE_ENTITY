@@ -33,44 +33,7 @@
                 let response = await fetch(url);
                 if (response.ok) {
                     let data = await response.json();
-                    let prenotazioni = document.getElementById('prenotazioni');
-                    let table = document.createElement('table');
-                    table.innerHTML = `
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <span>Nominativo</span>
-                                    </th>
-                                    <th>
-                                        <span>Camera</span>
-                                    </th>
-                                    <th>
-                                        <span>Periodo</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                        `;
-                    prenotazioni.appendChild(table);
-                    data.forEach(prenotazione => {
-                        let row = document.createElement('tr');
-                        row.innerHTML = `
-                            <tbody>
-                                <tr>
-                                    <th>
-                                        <span>Nominativo ${}</span>
-                                    </th>
-                                    <th>
-                                        <span>${}</span>
-                                    </th>
-                                    <th>
-                                        <span> ${} </span>
-                                    </th>
-
-                                </tr>
-                            </tbody>
-                            `;
-                        table.appendChild(row);
-                    });
+                    
                     console.log(data);
                 } else {
                     throw new Error('Error: ' + response.status);

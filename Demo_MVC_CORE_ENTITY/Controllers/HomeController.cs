@@ -37,6 +37,7 @@ namespace Progetto_MVC_CORE_ENTITY.Controllers
         }
 
 
+        // IN CONSOLE.LOG SI VEDE NON SONO RIUSCITO IN TEMPO A STAMPARLA
         public async Task<IActionResult> CercaPrenotazione(string? codiceFiscale)
         {
             try
@@ -66,7 +67,13 @@ namespace Progetto_MVC_CORE_ENTITY.Controllers
                             s.TipoServizio.NomeTipoServizio,
                             s.TipoServizio.IdTipoServizio
 
-                        })
+                        }),
+                        Camera = new
+                        {
+                            p.Camera.Numero,
+
+                            p.Camera.TipoCamera
+                        }
                     }).ToListAsync();
                 return Json(prenotazioni);
             }
