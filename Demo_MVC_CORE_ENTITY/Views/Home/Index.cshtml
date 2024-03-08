@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h2>Cerca Prenotazioni</h2>
+        
+        <div class="form-group">
+            <label class="control-label">Inserisci Codice Fiscale</label>
+            <input id="codiceFiscale" type="text" class="form-control" />          
+        </div>
+        
+        <button id="cerca" class="btn btn-primary"> Cerca Prenotazione</button>
+       
+
+        <div id="prenotazioni"></div>
+   
+</div>
+
+
+@section Scripts {
+
+
+    <script>
+        let fetchPrenotazioni = async () => {
+            let codiceFiscale = document.getElementById('codiceFiscale').value;
+            console.log(codiceFiscale);
+
+            let url = '/Home/CercaPrenotazione?codiceFiscale=' + codiceFiscale;
+            try {
+                let response = await fetch(url);
+                if (response.ok) {
+                    let data = await response.json();
+                    let prenotazioni = document.getElementById('prenotazioni');
+                    let table = document.createElement('table');
+                    table.innerHTML = `
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <span>Nominativo</span>
+                                    </th>
+                                    <th>
+                                        <span>Camera</span>
+                                    </th>
+                                    <th>
+                                        <span>Periodo</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                        `;
+                    prenotazioni.appendChild(table);
+                    data.forEach(prenotazione => {
+                        let row = document.createElement('tr');
+                        row.innerHTML = `
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        <span>Nominativo ${}</span>
+                                    </th>
+                                    <th>
+                                        <span>${}</span>
+                                    </th>
+                                    <th>
+                                        <span> ${} </span>
+                                    </th>
+
+                                </tr>
+                            </tbody>
+                            `;
+                        table.appendChild(row);
+                    });
+                    console.log(data);
+                } else {
+                    throw new Error('Error: ' + response.status);
+                }
+            } catch (error) {
+                console.log("Error: ", error);
+            }
+        }
+        let fetchBtn = document.getElementById('cerca');
+        fetchBtn.addEventListener('click', fetchPrenotazioni);
+    </script>
+}
